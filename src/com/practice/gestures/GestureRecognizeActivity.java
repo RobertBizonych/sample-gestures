@@ -1,43 +1,37 @@
-package com.authorwjf.gesture;
+package com.practice.gestures;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.gesture.*;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 
-public class Main extends Activity implements GestureOverlayView.OnGesturePerformedListener, GestureOverlayView.OnGestureListener {
+public class GestureRecognizeActivity extends Activity implements GestureOverlayView.OnGesturePerformedListener {
 	private GestureLibrary library;
-	private GestureDetector gDetector;
-    private Toast toast;
-    private EditText nameField;
-    private String gestureName;
     private GestureOverlayView gestures;
+    private File libraryFile = new File(Environment.getExternalStorageDirectory(), "gestures");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-//        gDetector = new GestureDetector(this);
-        library = GestureLibraries.fromRawResource(this, R.raw.gestures);
+
+        library = GestureLibraries.fromFile(libraryFile);
+//        library.setOrientationStyle(GestureStore.ORIENTATION_INVARIANT);
+//        library.setSequenceType(GestureStore.SEQUENCE_INVARIANT);
         if (!library.load()) {
-            finish();
+            Toast.makeText(this, "Unable to load library", Toast.LENGTH_SHORT).show();
         }
-
         gestures = (GestureOverlayView) findViewById(R.id.gestures);
-        gestures.addOnGestureListener(this);
         gestures.addOnGesturePerformedListener(this);
-
-        nameField = (EditText) findViewById(R.id.gesture_name);
-        gestureName = nameField.getText().toString();
     }
     
 //    @Override
@@ -95,42 +89,23 @@ public class Main extends Activity implements GestureOverlayView.OnGesturePerfor
     @Override
     public void onGesturePerformed(GestureOverlayView overlay, final Gesture gesture) {
         ArrayList<Prediction> predictions = library.recognize(gesture);
-        Button saveGesture = (Button)findViewById(R.id.save_gesture);
-        saveGesture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                library.addGesture(gestureName, gesture);
-                Toast.makeText(Main.this, gestureName + " added", Toast.LENGTH_LONG).show();
+        for (Prediction prediction : predictions) {
+            if (prediction.score > 1.0) {
+                Toast.makeText(this, prediction.name, Toast.LENGTH_SHORT).show();
+                break;
+            } else {
+                Toast.makeText(this, "No gesture", Toast.LENGTH_SHORT).show();
             }
-        });
-
-//        if (predictions.size() > 0 && predictions.get(0).score > 1.0) {
-//            String result = predictions.get(0).name;
-//            if ("peru".equalsIgnoreCase(result)) {
-//                Toast.makeText(this, "Peru", Toast.LENGTH_LONG).show();
-//            } else if ("save".equalsIgnoreCase(result)) {
-//                Toast.makeText(this, "Saving the document", Toast.LENGTH_LONG).show();
-//            }
-//        }
+        }
     }
 
-    @Override
-    public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void addAnother(View view) {
+        Intent intent = new Intent(this, CreateGestureActivity.class);
+        startActivity(intent);
     }
 
-    @Override
-    public void onGesture(GestureOverlayView overlay, MotionEvent event) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void toList(View view) {
+        Intent intent = new Intent(this, GestureBuilderActivity.class);
+        startActivity(intent);
     }
 }

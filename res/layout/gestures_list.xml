@@ -39,6 +39,15 @@
         android:text="@string/gestures_loading"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Recognize"
+        android:enabled="false"
+        android:onClick="recognizeGestures"
+        android:id="@+id/recognizeButton"/>
+
     <LinearLayout
         style="@android:style/ButtonBar"
 

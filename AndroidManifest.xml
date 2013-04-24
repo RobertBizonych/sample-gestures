@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.authorwjf.gesture"
-    android:versionCode="1"
-    android:versionName="1.0" >
+          package="com.practice.gestures"
+          android:versionCode="1"
+          android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16"/>
 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/application_name" >
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application android:icon="@drawable/ic_launcher">
         <activity
-            android:name=".CreateGestureActivity"
-            android:label="@string/application_name" >
+            android:name="GestureBuilderActivity"
+            android:label="@string/application_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT "/>
             </intent-filter>
         </activity>
         <activity
-                android:name=".GestureBuilderActivity"/>
+            android:label="@string/application_name"
+            android:name=".CreateGestureActivity"/>
+        <activity
+            android:label="@string/application_name"
+            android:name="GestureRecognizeActivity"/>
     </application>
 
 </manifest>

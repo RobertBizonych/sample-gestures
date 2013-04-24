@@ -4,31 +4,11 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
-    <!--<TextView-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Swipe Demo"-->
-    <!--android:gravity="center"-->
-    <!--android:layout_margin="10dp"/>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="fill_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--android:gravity="center">-->
-    <!--<ImageView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:gravity="center"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:id="@+id/image_place_holder"/>-->
-    <!--</LinearLayout>-->
-
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gesture_name"
-            android:layout_margin="10dp"/>
+    <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/gesture_name"-->
+            <!--android:layout_margin="10dp"/>-->
 
     <android.gesture.GestureOverlayView
             android:id="@+id/gestures"
@@ -36,22 +16,22 @@
             android:layout_height="300dp"
             android:eventsInterceptionEnabled="true"
             android:gestureStrokeType="multiple"
-            android:orientation="vertical">
-
-        <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"/>
-
-    </android.gesture.GestureOverlayView>
+            android:orientation="vertical"
+        android:background="@android:color/white"/>
 
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/save_gesture"
             android:layout_margin="10dp"
             android:layout_gravity="bottom"
-            android:text="save"/>
+            android:text="Add more"
+            android:onClick="addAnother"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Go to list"
+            android:onClick="toList"/>
 
 </LinearLayout>

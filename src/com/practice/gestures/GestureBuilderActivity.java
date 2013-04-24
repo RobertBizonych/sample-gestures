@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.authorwjf.gesture;
+package com.practice.gestures;
 
 import android.app.Dialog;
 import android.app.AlertDialog;
@@ -44,6 +44,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.BitmapDrawable;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Collections;
 import java.util.HashMap;
@@ -118,6 +119,13 @@ public class GestureBuilderActivity extends ListActivity {
         startActivityForResult(intent, REQUEST_NEW_GESTURE);
     }
 
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    public void recognizeGestures(View v) {
+        Intent intent = new Intent(this, GestureRecognizeActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,8 +180,7 @@ public class GestureBuilderActivity extends ListActivity {
         long id = state.getLong(GESTURES_INFO_ID, -1);
         if (id != -1) {
             final Set<String> entries = sStore.getGestureEntries();
-            out:
-            for (String name : entries) {
+            out:        for (String name : entries) {
                 for (Gesture gesture : sStore.getGestures(name)) {
                     if (gesture.getID() == id) {
                         mCurrentRenameGesture = new NamedGesture();
@@ -187,8 +194,7 @@ public class GestureBuilderActivity extends ListActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
         super.onCreateContextMenu(menu, v, menuInfo);
 
@@ -332,6 +338,7 @@ public class GestureBuilderActivity extends ListActivity {
 
             findViewById(R.id.addButton).setEnabled(false);
             findViewById(R.id.reloadButton).setEnabled(false);
+            findViewById(R.id.recognizeButton).setEnabled(false);
 
             mAdapter.setNotifyOnChange(false);
             mAdapter.clear();
@@ -395,6 +402,7 @@ public class GestureBuilderActivity extends ListActivity {
             } else {
                 findViewById(R.id.addButton).setEnabled(true);
                 findViewById(R.id.reloadButton).setEnabled(true);
+                findViewById(R.id.recognizeButton).setEnabled(true);
                 checkForEmpty();
             }
         }
